@@ -7,14 +7,28 @@ import hashlib
 import json
 import os
 import subprocess
+import logging
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.config['ALLOWED_EXTENSIONS'] = {'pdf'}
 
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('healthchain.log'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
 # Ensure upload directory exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+logger.info("HealthChain Decoder application starting up")
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -143,14 +157,19 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    start_time = datetime.now()
+    logger.info(f"File upload request received at {start_time}")
+    
     # Check if a file was submitted
     if 'file' not in request.files:
+        logger.warning("Upload request missing file part")
         return jsonify({'error': 'No file part'}), 400
     
     file = request.files['file']
     
     # If the user doesn't select a file, browser submits an empty file
     if file.filename == '':
+        logger.warning("Upload request with empty filename")
         return jsonify({'error': 'No file selected'}), 400
     
     if file and allowed_file(file.filename):
@@ -158,19 +177,26 @@ def upload_file():
         filename = secure_filename(file.filename)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
+        logger.info(f"File saved: {filename} ({os.path.getsize(file_path)} bytes)")
         
         # Process the file
         try:
             # Call Node.js function (blockchain-related)
+            logger.info("Starting blockchain integration")
             node_result = call_node_function()
             
             # Generate summary
+            logger.info("Starting document summarization")
             summarizer = Summarize(file_path)
             summary_text = summarizer.callRag()
             
             # Run NER
+            logger.info("Starting named entity recognition")
             ner = NER(file_path)
             highlighted_text = ner.run_NER()
+            
+            processing_time = datetime.now() - start_time
+            logger.info(f"File processing completed in {processing_time.total_seconds():.2f} seconds")
             
             # Return the processed results
             return render_template(
@@ -181,9 +207,11 @@ def upload_file():
             )
             
         except Exception as e:
-            return jsonify({'error': str(e)}), 500
+            logger.error(f"Error processing file {filename}: {str(e)}")
+            return jsonify({'error': f'Processing failed: {str(e)}'}), 500
     
-    return jsonify({'error': 'Invalid file type'}), 400
+    logger.warning(f"Invalid file type uploaded: {file.filename}")
+    return jsonify({'error': 'Invalid file type. Only PDF files are supported.'}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
