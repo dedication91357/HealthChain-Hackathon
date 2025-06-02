@@ -1,0 +1,29 @@
+/* Additional styles for the Blockchain of Health application */
+
+.entity-legend {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+}
+
+.entity-legend-item {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.entity-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+/* Some default entity colors */
+.PROBLEM-dot { background-color: #ffcc80; }
+.TEST-dot { background-color: #81c784; }
+.TREATMENT-dot { background-color: #90caf9; }
+.DRUG-dot { background-color: #f48fb1; }
+.ANATOMY-dot { background-color: #ce93d8; }

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain of Health</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 2rem;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .upload-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .file-input-wrapper input[type="file"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px dashed #6c757d;
+            border-radius: 4px;
+        }
+        .btn-primary {
+            background-color: #4e73df;
+            border-color: #4e73df;
+        }
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            border-color: #2e59d9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Blockchain of Health</h1>
+            <p class="lead">Secure health document processing with NER and summarization</p>
+        </div>
+        
+        <div class="upload-container">
+            <h4>Upload Medical Document</h4>
+            <p>Select a PDF file to analyze. The system will extract medical entities and provide a summary.</p>
+            
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="file-input-wrapper">
+                    <input type="file" name="file" class="form-control" accept=".pdf" required>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">Process Document</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="mt-4 text-center">
+            <p class="text-muted">Your document will be processed securely. All uploads are encrypted.</p>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
