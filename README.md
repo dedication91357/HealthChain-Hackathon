@@ -6,6 +6,10 @@ A secure blockchain-powered platform that decodes and simplifies medical records
 
 A demonstration video (demo.mp4) is available in the repository that shows the application in action. This video walks through the full functionality of the system including document upload, processing, and the blockchain integration. We recommend watching the demo to get a better understanding of how the application works.
 
+
+https://github.com/user-attachments/assets/a1240b19-8ce5-4572-b516-2a0ef5e17ee1
+
+
 ## The Inspiration
 
 Health records are challenging to understand and often include a lot of foreign jargon. When it comes to your healthcare, having transparency on what medications and procedures you are being prescribed without the compromise of security is key. We solve this problem by leveraging natural language modeling techniques that provide users with greater insight into their medical documents. Specifically by employing a named entity recognition model to identify keywords within a patient's health report and an informed summarization model that concisely explains your care pathway.
