@@ -1,28 +1,86 @@
-/* Additional styles for the Blockchain of Health application */
+/* Additional styles for the HealthChain Decoder application */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.upload-area {
+    border: 2px dashed #667eea;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    background: #f8f9ff;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: #764ba2;
+    background: #f0f2ff;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    color: white;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
 
 .entity-legend {
     margin-top: 20px;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #e9ecef;
-    border-radius: 5px;
+    border-radius: 10px;
+    background: #f8f9fa;
 }
 
 .entity-legend-item {
     display: inline-block;
-    margin-right: 10px;
-    margin-bottom: 5px;
+    margin-right: 15px;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .entity-dot {
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    margin-right: 5px;
+    margin-right: 8px;
 }
 
-/* Some default entity colors */
-.PROBLEM-dot { background-color: #ffcc80; }
+.results-section {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #f8f9fa;
+}
+
+/* Enhanced entity colors */
+.PROBLEM-dot { background-color: #ff9999; }
 .TEST-dot { background-color: #81c784; }
 .TREATMENT-dot { background-color: #90caf9; }
 .DRUG-dot { background-color: #f48fb1; }
