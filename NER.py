@@ -2,13 +2,18 @@ import fitz  # PyMuPDF+
 from transformers import pipeline
 import hashlib
 import streamlit as st
+import logging
+
+logger = logging.getLogger(__name__)
 
 class NER:
-    uploaded_file=""
-    pipe=None
+    """Named Entity Recognition class for medical document processing."""
     
-    def __init__(self,file):
-        self.uploaded_file=file
+    def __init__(self, file):
+        self.uploaded_file = file
+        self.pipe = None
+        self.entity_cache = {}
+        logger.info("NER instance initialized")
 
     # Function to extract text from PDF
     def extract_text_from_pdf(self, pdf_file):
@@ -43,13 +48,25 @@ class NER:
         result = self.pipe(text)
         return result
 
-    # Function to generate a consistent light color for each entity type
-    def generate_color_for_entity(self,entity_type):
+    def generate_color_for_entity(self, entity_type):
+        """Generate a consistent color for each entity type with caching."""
+        if entity_type in self.entity_cache:
+            return self.entity_cache[entity_type]
+            
         # Hash the entity type to get a consistent value
         hash_value = int(hashlib.md5(entity_type.encode()).hexdigest(), 16)
-        # Generate a light color
-        color_value = (hash_value % 0xFFFFFF) + 0x808080
-        color = "#{:06x}".format(color_value & 0xFFFFFF)
+        # Generate a more vibrant color with better contrast
+        hue = (hash_value % 360)
+        saturation = 70 + (hash_value % 30)  # 70-100% saturation
+        lightness = 80 + (hash_value % 15)   # 80-95% lightness
+        
+        # Convert HSL to hex (simplified)
+        color = f"hsl({hue}, {saturation}%, {lightness}%)"
+        
+        # Cache the color for performance
+        self.entity_cache[entity_type] = color
+        logger.debug(f"Generated color {color} for entity type: {entity_type}")
+        
         return color
 
     # Function to highlight entities in the text
